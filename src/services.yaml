@@ -7,3 +7,13 @@ services:
     SuppMB\MensagemBackend\Api\V1\Controller\:
         resource: '%kernel.project_dir%/vendor/supp-mb/supp-mensagem-backend/src/Api/V1/Controller/*'
         tags: [ 'controller.service_arguments' ]
+    
+    SuppMB\MensagemBackend\Repository\:
+        resource: '%kernel.project_dir%/vendor/supp-mb/supp-mensagem-backend/src/Repository/*'
+        lazy: true
+
+    SuppMB\MensagemBackend\Api\V1\Resource\:
+        resource: '%kernel.project_dir%/vendor/supp-mb/supp-mensagem-backend/src/Api/V1/Resource/*'
+        tags: [ 'supp_core.administrativo_backend.rest.resource' ]
+        lazy: true
+        public: true

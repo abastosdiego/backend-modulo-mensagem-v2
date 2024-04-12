@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SuppMB\MensagemBackend\Entity;
 
 use DateTime;
+use DMS\Filter\Rules as Filter;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -30,10 +31,6 @@ class Mensagem implements EntityInterface
     use Id;
     use Uuid;
 
-    #[Filter\StripTags]
-    #[Filter\Trim]
-    #[Filter\StripNewlines]
-    #[Filter\ToUpper(encoding: 'UTF-8')]
     #[Assert\NotBlank(message: 'O campo Assunto não pode estar em branco!')]
     #[Assert\NotNull(message: 'O campo Assunto não pode ser nulo!')]
     #[Assert\Length(
@@ -45,11 +42,6 @@ class Mensagem implements EntityInterface
     #[ORM\Column(type: 'string', nullable: false)]
     protected string $assunto = '';
 
-
-    #[Filter\StripTags]
-    #[Filter\Trim]
-    #[Filter\StripNewlines]
-    #[Filter\ToUpper(encoding: 'UTF-8')]
     #[Assert\NotBlank(message: 'O campo Texto não pode estar em branco!')]
     #[Assert\NotNull(message: 'O campo Texto não pode ser nulo!')]
     #[Assert\Length(
