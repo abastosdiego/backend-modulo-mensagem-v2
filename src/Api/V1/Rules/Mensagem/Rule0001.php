@@ -49,11 +49,11 @@ class Rule0001 implements RuleInterface
      */
     public function validate(?RestDtoInterface $restDto, EntityInterface $entity, string $transactionId): bool
     {
-        $palavra = 'secreto';
+        //$palavra = 'secreto';
 
-        if (strpos($restDto->getAssunto(), $palavra) !== false) {
-            $this->rulesTranslate->throwException('mensagem', '0001');
-        }
+        //if (strpos($restDto->getAssunto(), $palavra) !== false) {
+        $this->rulesTranslate->throwException('mensagem', '0001');
+        //}
 
         return true;
     }
