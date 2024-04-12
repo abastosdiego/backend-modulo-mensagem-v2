@@ -1,0 +1,22 @@
+{
+    "name": "supp-mb/supp-mensagem-backend",
+    "description": "Módulo de mensagem MB",
+    "version": "1.0.0",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^8.1.0"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        }
+    },
+    "autoload": {
+        "psr-4": {"SuppMB\\MensagemBackend\\": "src/"}
+    },
+    "extra": {
+        "allow-contrib": "true",
+        "projectTitle": "Módulo de mensagem MB"
+    }
+}
