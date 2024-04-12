@@ -30,6 +30,38 @@ class Mensagem implements EntityInterface
     use Id;
     use Uuid;
 
+    #[Filter\StripTags]
+    #[Filter\Trim]
+    #[Filter\StripNewlines]
+    #[Filter\ToUpper(encoding: 'UTF-8')]
+    #[Assert\NotBlank(message: 'O campo Assunto não pode estar em branco!')]
+    #[Assert\NotNull(message: 'O campo Assunto não pode ser nulo!')]
+    #[Assert\Length(
+        min: 3,
+        max: 100,
+        minMessage: 'O campo Assunto deve ter no mínimo 3 caracteres!',
+        maxMessage: 'O campo Assunto deve ter no máximo 100 caracteres!'
+    )]
+    #[ORM\Column(type: 'string', nullable: false)]
+    protected string $assunto = '';
+
+
+    #[Filter\StripTags]
+    #[Filter\Trim]
+    #[Filter\StripNewlines]
+    #[Filter\ToUpper(encoding: 'UTF-8')]
+    #[Assert\NotBlank(message: 'O campo Texto não pode estar em branco!')]
+    #[Assert\NotNull(message: 'O campo Texto não pode ser nulo!')]
+    #[Assert\Length(
+        min: 3,
+        max: 100,
+        minMessage: 'O campo Texto deve ter no mínimo 3 caracteres!',
+        maxMessage: 'O campo Texto deve ter no máximo 100 caracteres!'
+    )]
+    #[ORM\Column(type: 'string', nullable: false)]
+    protected string $texto = '';
+
+
     /**
      * Constructor.
      *
@@ -40,5 +72,27 @@ class Mensagem implements EntityInterface
         $this->setUuid();
     }
 
-    
+    public function getAssunto(): string
+    {
+        return $this->assunto;
+    }
+
+    public function setAssunto(string $assunto): self
+    {
+        $this->assunto = $assunto;
+
+        return $this;
+    }
+
+    public function getTexto(): string
+    {
+        return $this->texto;
+    }
+
+    public function setTexto(string $texto): self
+    {
+        $this->texto = $texto;
+
+        return $this;
+    }
 }

@@ -10,11 +10,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/mensagem')]
 class MensagemController
 {
-    #[Route('/teste', name: 'index', methods: ['GET'])]
-    public function teste(): Response
+    #[Route('', name: 'index', methods: ['GET'])]
+    public function index(): Response
     {
         return new Response(
-            '<html><body>valeu</body></html>'
+            '<html><body>Hello World!</body></html>'
         );
     }
 }
