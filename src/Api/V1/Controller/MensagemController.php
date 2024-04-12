@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use SuppCore\AdministrativoBackend\Rest\Controller;
 use SuppCore\AdministrativoBackend\Rest\ResponseHandler;
 use SuppCore\AdministrativoBackend\Rest\Traits\Actions;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use SuppMB\MensagemBackend\Api\V1\Resource\MensagemResource;
