@@ -22,3 +22,8 @@ services:
         resource: '%kernel.project_dir%/vendor/supp-mb/supp-mensagem-backend/src/Api/V1/Rules/*/*'
         tags: [ 'rules_manager.rule' ]
         lazy: true
+
+    SuppMB\MensagemBackend\Api\V1\Triggers\:
+        resource: '%kernel.project_dir%/vendor/supp-mb/supp-mensagem-backend/src/Api/V1/Triggers/*/*'
+        tags: [ 'triggers_manager.trigger' ]
+        lazy: true

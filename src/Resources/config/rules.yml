@@ -1,3 +1,3 @@
 messages:
     mensagem:
-        '0001': 'Mensagem de teste!'
+        '0001': 'Não pode existir a palavra secreto no assunto! (Exemplo de regra de negócio)'
