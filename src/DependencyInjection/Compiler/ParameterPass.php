@@ -16,6 +16,7 @@ class ParameterPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-       
+        $rules = Yaml::parse(file_get_contents(__DIR__.'/../../Resources/config/rules.yml'));
+        $container->setParameter('rules', array_merge_recursive($container->getParameter('rules'), $rules));
     }
 }

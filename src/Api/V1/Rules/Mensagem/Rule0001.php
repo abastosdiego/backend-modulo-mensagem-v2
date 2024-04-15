@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SuppMB\MensagemBackend\Api\V1\Rules\Mensagem;
 
 use DateTime;
+use Exception;
 use SuppCore\AdministrativoBackend\DTO\RestDtoInterface;
 use SuppCore\AdministrativoBackend\Entity\EntityInterface;
 use SuppCore\AdministrativoBackend\Rules\Exceptions\RuleException;
