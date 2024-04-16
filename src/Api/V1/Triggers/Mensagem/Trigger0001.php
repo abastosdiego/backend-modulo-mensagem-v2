@@ -47,7 +47,7 @@ class Trigger0001 implements TriggerInterface
      */
     public function execute(?RestDtoInterface $restDto, EntityInterface $entity, string $transactionId): void
     {
-        $restDto->setAssunto($restDto->getAssunto() . ' (Trigger)');
+        //$restDto->setAssunto($restDto->getAssunto() . ' (Trigger)');
     }
 
     public function getOrder(): int

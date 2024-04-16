@@ -1,3 +1,5 @@
 messages:
     mensagem:
-        '0001': 'Não pode existir a palavra secreto no assunto! (Exemplo de regra de negócio)'
+        '0001': 'Unidade de Origem inválida!'
+        '0002': 'Usuário sem Lotação!'
+        '0003': 'Usuário não está lotado na Unidade de Origem informada!'

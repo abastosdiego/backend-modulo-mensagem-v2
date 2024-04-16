@@ -18,17 +18,14 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 /**
  * Class Rule0001.
  *
- * @descSwagger=Exemplo de Rule
+ * @descSwagger=Verifica se a unidadeOrigem é uma Unidade
  * @classeSwagger=Rule0001
  *
  */
 class Rule0001 implements RuleInterface
 {
-    private $usuarioLogado;
-
-    public function __construct(private RulesTranslate $rulesTranslate, private TokenStorageInterface $tokenStorage) 
+    public function __construct(private RulesTranslate $rulesTranslate) 
     {
-        $this->usuarioLogado = $this->tokenStorage->getToken()->getUser();
     }
 
     public function supports(): array
@@ -48,11 +45,7 @@ class Rule0001 implements RuleInterface
      */
     public function validate(?RestDtoInterface $restDto, EntityInterface $entity, string $transactionId): bool
     {
-        //$this->usuarioLogado;
-
-        $palavra = 'secreto';
-
-        if (strpos($restDto->getAssunto(), $palavra) !== false) {
+        if ($restDto->getUnidadeOrigem()->getParent() !== null) {
             $this->rulesTranslate->throwException('mensagem', '0001');
         }
 

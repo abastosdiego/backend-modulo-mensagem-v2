@@ -9,6 +9,7 @@ use DMS\Filter\Rules as Filter;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
 use SuppCore\AdministrativoBackend\Api\V1\DTO\Setor as SetorDTO;
+use SuppCore\AdministrativoBackend\Entity\Setor as SetorEntity;
 use SuppCore\AdministrativoBackend\DTO\RestDto;
 use SuppCore\AdministrativoBackend\DTO\Traits\Blameable;
 use SuppCore\AdministrativoBackend\DTO\Traits\IdUuid;
@@ -321,11 +322,19 @@ class Mensagem extends RestDto
         return $this;
     }
 
+    /**
+     * @return SetorDTO|SetorEntity|null
+     */
     public function getUnidadeOrigem(): ?EntityInterface
     {
         return $this->unidadeOrigem;
     }
 
+    /**
+     * @param SetorDTO|SetorEntity|null $unidadeOrigem
+     *
+     * @return self
+     */
     public function setUnidadeOrigem(?EntityInterface $unidadeOrigem): self
     {
         $this->setVisited('unidadeOrigem');
