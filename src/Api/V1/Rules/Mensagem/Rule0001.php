@@ -13,6 +13,7 @@ use SuppCore\AdministrativoBackend\Rules\RuleInterface;
 use SuppCore\AdministrativoBackend\Rules\RulesTranslate;
 
 use SuppMB\MensagemBackend\Api\V1\DTO\Mensagem as MensagemDTO;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class Rule0001.
@@ -23,14 +24,11 @@ use SuppMB\MensagemBackend\Api\V1\DTO\Mensagem as MensagemDTO;
  */
 class Rule0001 implements RuleInterface
 {
-    private RulesTranslate $rulesTranslate;
+    private $usuarioLogado;
 
-    /**
-     * Rule0001 constructor.
-     */
-    public function __construct(RulesTranslate $rulesTranslate)
+    public function __construct(private RulesTranslate $rulesTranslate, private TokenStorageInterface $tokenStorage) 
     {
-        $this->rulesTranslate = $rulesTranslate;
+        $this->usuarioLogado = $this->tokenStorage->getToken()->getUser();
     }
 
     public function supports(): array
@@ -50,6 +48,8 @@ class Rule0001 implements RuleInterface
      */
     public function validate(?RestDtoInterface $restDto, EntityInterface $entity, string $transactionId): bool
     {
+        //$this->usuarioLogado;
+
         $palavra = 'secreto';
 
         if (strpos($restDto->getAssunto(), $palavra) !== false) {

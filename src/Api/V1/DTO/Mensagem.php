@@ -8,11 +8,13 @@ use DateTime;
 use DMS\Filter\Rules as Filter;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
+use SuppCore\AdministrativoBackend\Api\V1\DTO\Setor as SetorDTO;
 use SuppCore\AdministrativoBackend\DTO\RestDto;
 use SuppCore\AdministrativoBackend\DTO\Traits\Blameable;
 use SuppCore\AdministrativoBackend\DTO\Traits\IdUuid;
 use SuppCore\AdministrativoBackend\DTO\Traits\Softdeleteable;
 use SuppCore\AdministrativoBackend\DTO\Traits\Timeblameable;
+use SuppCore\AdministrativoBackend\Entity\EntityInterface;
 use SuppCore\AdministrativoBackend\Form\Attributes as Form;
 use SuppCore\AdministrativoBackend\Mapper\Attributes as DTOMapper;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -150,6 +152,19 @@ class Mensagem extends RestDto
     #[OA\Property(type: 'string', format: 'date-time')]
     #[DTOMapper\Property]
     protected ?DateTime $prazoResposta = null;
+
+    #[Form\Field(
+        'Symfony\Bridge\Doctrine\Form\Type\EntityType',
+        options: [
+            'class' => 'SuppCore\AdministrativoBackend\Entity\Setor',
+            'required' => true,
+        ]
+    )]
+    #[Assert\NotBlank(message: 'O campo não pode estar em branco!')]
+    #[Assert\NotNull(message: 'O campo não pode ser nulo!')]
+    #[OA\Property(ref: new Model(type: SetorDTO::class))]
+    #[DTOMapper\Property(dtoClass: 'SuppCore\AdministrativoBackend\Api\V1\DTO\Setor')]
+    protected ?EntityInterface $unidadeOrigem = null;
     
 
     public function getDataHora(): ?string
@@ -302,6 +317,20 @@ class Mensagem extends RestDto
         $this->setVisited('prazoResposta');
 
         $this->prazoResposta = $prazoResposta;
+
+        return $this;
+    }
+
+    public function getUnidadeOrigem(): ?EntityInterface
+    {
+        return $this->unidadeOrigem;
+    }
+
+    public function setUnidadeOrigem(?EntityInterface $unidadeOrigem): self
+    {
+        $this->setVisited('unidadeOrigem');
+
+        $this->unidadeOrigem = $unidadeOrigem;
 
         return $this;
     }

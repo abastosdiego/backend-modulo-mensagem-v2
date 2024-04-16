@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Gedmo\Mapping\Annotation as Gedmo;
+use SuppCore\AdministrativoBackend\Entity\Setor;
 use SuppCore\AdministrativoBackend\Entity\EntityInterface;
 use SuppCore\AdministrativoBackend\Entity\Traits\Blameable;
 use SuppCore\AdministrativoBackend\Entity\Traits\Id;
@@ -68,22 +69,27 @@ class Mensagem implements EntityInterface
     protected DateTime $dataEntrada;
 
     #[ORM\Column(type: 'string', length: 20)]
-    private ?string $sigilo = 'ostensivo';
+    protected ?string $sigilo = 'ostensivo';
 
     #[ORM\Column]
-    private ?bool $rascunho = null;
+    protected ?bool $rascunho = null;
 
     #[ORM\Column(name: 'prazo_transmissao', type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $prazoTransmissao = null;
+    protected ?\DateTimeInterface $prazoTransmissao = null;
 
     #[ORM\Column(name: 'data_autorizacao', type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $dataAutorizacao = null;
+    protected ?\DateTimeInterface $dataAutorizacao = null;
 
     #[ORM\Column(name: 'exige_resposta')]
-    private ?bool $exigeResposta = false;
+    protected ?bool $exigeResposta = false;
 
     #[ORM\Column(name: 'prazo_resposta', type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $prazoResposta = null;
+    protected ?\DateTimeInterface $prazoResposta = null;
+
+    #[Assert\NotNull(message: 'O campo unidadeOrigem não pode ser nulo!')]
+    #[ORM\ManyToOne(targetEntity: 'SuppCore\AdministrativoBackend\Entity\Setor')]
+    #[ORM\JoinColumn(name: 'unidade_origem_id', referencedColumnName: 'id', nullable: false)]
+    protected Setor $unidadeOrigem;
 
     /**
      * Constructor.
@@ -226,6 +232,18 @@ class Mensagem implements EntityInterface
     public function setPrazoResposta(?\DateTimeInterface $prazoResposta): self
     {
         $this->prazoResposta = $prazoResposta;
+
+        return $this;
+    }
+
+    public function getUnidadeOrigem(): Setor
+    {
+        return $this->unidadeOrigem;
+    }
+
+    public function setUnidadeOrigem(Setor $unidadeOrigem): self
+    {
+        $this->unidadeOrigem = $unidadeOrigem;
 
         return $this;
     }
