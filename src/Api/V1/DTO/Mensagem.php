@@ -16,6 +16,7 @@ use SuppCore\AdministrativoBackend\DTO\Traits\Timeblameable;
 use SuppCore\AdministrativoBackend\Form\Attributes as Form;
 use SuppCore\AdministrativoBackend\Mapper\Attributes as DTOMapper;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * Class Mensagem.
@@ -36,6 +37,16 @@ class Mensagem extends RestDto
     #[Form\Field(
         'Symfony\Component\Form\Extension\Core\Type\TextType',
         options: [
+            'required' => false,
+        ]
+    )]
+    #[OA\Property(type: 'string')]
+    #[DTOMapper\Property]
+    protected ?string $dataHora = '';
+
+    #[Form\Field(
+        'Symfony\Component\Form\Extension\Core\Type\TextType',
+        options: [
             'required' => true,
         ]
     )]
@@ -50,7 +61,6 @@ class Mensagem extends RestDto
     #[OA\Property(type: 'string')]
     #[DTOMapper\Property]
     protected ?string $assunto = null;
-
 
     #[Form\Field(
         'Symfony\Component\Form\Extension\Core\Type\TextType',
@@ -70,6 +80,91 @@ class Mensagem extends RestDto
     #[DTOMapper\Property]
     protected ?string $texto = null;
     
+    #[Form\Field(
+        'Symfony\Component\Form\Extension\Core\Type\TextType',
+        options: [
+            'required' => false,
+        ]
+    )]
+    #[OA\Property(type: 'string')]
+    #[DTOMapper\Property]
+    protected ?string $observacao = null;
+
+    #[OA\Property(type: 'string', format: 'date-time')]
+    #[DTOMapper\Property]
+    protected ?DateTime $dataEntrada = null;
+    
+    #[Form\Field(
+        'Symfony\Component\Form\Extension\Core\Type\TextType',
+        options: [
+            'required' => true,
+        ]
+    )]
+    #[OA\Property(type: 'string')]
+    #[DTOMapper\Property]
+    protected ?string $sigilo = null;
+
+    #[OA\Property(type: 'boolean')]
+    #[DTOMapper\Property]
+    protected ?bool $rascunho = null;
+
+    #[Form\Field(
+        'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+        options: [
+            'widget' => 'single_text',
+            'required' => false,
+        ]
+    )]
+    #[OA\Property(type: 'string', format: 'date-time')]
+    #[DTOMapper\Property]
+    protected ?DateTime $prazoTransmissao = null;
+
+    #[Form\Field(
+        'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+        options: [
+            'widget' => 'single_text',
+            'required' => false,
+        ]
+    )]
+    #[OA\Property(type: 'string', format: 'date-time')]
+    #[DTOMapper\Property]
+    protected ?DateTime $dataAutorizacao = null;
+
+    #[Form\Field(
+        'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
+        options: [
+            'required' => false,
+        ]
+    )]
+    #[OA\Property(type: 'boolean')]
+    #[DTOMapper\Property]
+    protected ?bool $exigeResposta = null;
+
+    #[Form\Field(
+        'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
+        options: [
+            'widget' => 'single_text',
+            'required' => false,
+        ]
+    )]
+    #[OA\Property(type: 'string', format: 'date-time')]
+    #[DTOMapper\Property]
+    protected ?DateTime $prazoResposta = null;
+    
+
+    public function getDataHora(): ?string
+    {
+        return $this->dataHora;
+    }
+
+    public function setDataHora(?string $dataHora): self
+    {
+        $this->setVisited('dataHora');
+
+        $this->dataHora = $dataHora;
+
+        return $this;
+    }
 
     public function getAssunto(): ?string
     {
@@ -95,6 +190,118 @@ class Mensagem extends RestDto
         $this->setVisited('texto');
 
         $this->texto = $texto;
+
+        return $this;
+    }
+
+    public function getObservacao(): ?string
+    {
+        return $this->observacao;
+    }
+
+    public function setObservacao(?string $observacao): self
+    {
+        $this->setVisited('observacao');
+
+        $this->observacao = $observacao;
+
+        return $this;
+    }
+
+    public function getDataEntrada(): ?DateTime
+    {
+        return $this->dataEntrada;
+    }
+
+    public function setDataEntrada(?DateTime $dataEntrada): self
+    {
+        $this->setVisited('dataEntrada');
+
+        $this->dataEntrada = $dataEntrada;
+
+        return $this;
+    }
+
+    public function getSigilo(): ?string
+    {
+        return $this->sigilo;
+    }
+
+    public function setSigilo(?string $sigilo): self
+    {
+        $this->setVisited('sigilo');
+
+        $this->sigilo = $sigilo;
+
+        return $this;
+    }
+
+    public function getRascunho(): ?bool
+    {
+        return $this->rascunho;
+    }
+
+    public function setRascunho(?bool $rascunho): self
+    {
+        $this->setVisited('rascunho');
+
+        $this->rascunho = $rascunho;
+
+        return $this;
+    }
+
+    public function getPrazoTransmissao(): ?DateTime
+    {
+        return $this->prazoTransmissao;
+    }
+
+    public function setPrazoTransmissao(?DateTime $prazoTransmissao): self
+    {
+        $this->setVisited('prazoTransmissao');
+
+        $this->prazoTransmissao = $prazoTransmissao;
+
+        return $this;
+    }
+
+    public function getDataAutorizacao(): ?DateTime
+    {
+        return $this->dataAutorizacao;
+    }
+
+    public function setDataAutorizacao(?DateTime $dataAutorizacao): self
+    {
+        $this->setVisited('dataAutorizacao');
+
+        $this->dataAutorizacao = $dataAutorizacao;
+
+        return $this;
+    }
+
+    public function getExigeResposta(): ?bool
+    {
+        return $this->exigeResposta;
+    }
+
+    public function setExigeResposta(?bool $exigeResposta): self
+    {
+        $this->setVisited('exigeResposta');
+
+        $this->exigeResposta = $exigeResposta;
+
+        return $this;
+    }
+
+    public function getPrazoResposta(): ?DateTime
+    {
+        return $this->prazoResposta;
+    }
+
+    public function setPrazoResposta(?DateTime $prazoResposta): self
+    {
+        $this->setVisited('prazoResposta');
+
+        $this->prazoResposta = $prazoResposta;
 
         return $this;
     }

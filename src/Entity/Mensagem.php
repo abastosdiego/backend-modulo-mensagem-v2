@@ -6,6 +6,7 @@ namespace SuppMB\MensagemBackend\Entity;
 
 use DateTime;
 use DMS\Filter\Rules as Filter;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -31,6 +32,9 @@ class Mensagem implements EntityInterface
     use Id;
     use Uuid;
 
+    #[ORM\Column(name: 'data_hora', type: 'string', nullable: true)]
+    protected ?string $dataHora = '';
+
     #[Assert\NotBlank(message: 'O campo Assunto não pode estar em branco!')]
     #[Assert\NotNull(message: 'O campo Assunto não pode ser nulo!')]
     #[Assert\Length(
@@ -46,13 +50,40 @@ class Mensagem implements EntityInterface
     #[Assert\NotNull(message: 'O campo Texto não pode ser nulo!')]
     #[Assert\Length(
         min: 3,
-        max: 100,
+        max: 2000,
         minMessage: 'O campo Texto deve ter no mínimo 3 caracteres!',
-        maxMessage: 'O campo Texto deve ter no máximo 100 caracteres!'
+        maxMessage: 'O campo Texto deve ter no máximo 2000 caracteres!'
     )]
     #[ORM\Column(type: 'string', nullable: false)]
     protected string $texto = '';
 
+    #[Assert\Length(
+        max: 500,
+        maxMessage: 'O campo Observação deve ter no máximo 500 caracteres!'
+    )]
+    #[ORM\Column(type: 'string', nullable: true)]
+    protected string $observacao = '';
+
+    #[ORM\Column(name: 'data_entrada', type: 'datetime', nullable: false)]
+    protected DateTime $dataEntrada;
+
+    #[ORM\Column(type: 'string', length: 20)]
+    private ?string $sigilo = 'ostensivo';
+
+    #[ORM\Column]
+    private ?bool $rascunho = null;
+
+    #[ORM\Column(name: 'prazo_transmissao', type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $prazoTransmissao = null;
+
+    #[ORM\Column(name: 'data_autorizacao', type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dataAutorizacao = null;
+
+    #[ORM\Column(name: 'exige_resposta')]
+    private ?bool $exigeResposta = false;
+
+    #[ORM\Column(name: 'prazo_resposta', type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $prazoResposta = null;
 
     /**
      * Constructor.
@@ -62,6 +93,21 @@ class Mensagem implements EntityInterface
     public function __construct()
     {
         $this->setUuid();
+        $this->dataEntrada = new \DateTime('now');
+        $this->rascunho = true;
+    }
+
+
+    public function getDataHora(): ?string
+    {
+        return $this->dataHora;
+    }
+
+    public function setDataHora(?string $dataHora): self
+    {
+        $this->dataHora = $dataHora;
+
+        return $this;
     }
 
     public function getAssunto(): string
@@ -84,6 +130,102 @@ class Mensagem implements EntityInterface
     public function setTexto(string $texto): self
     {
         $this->texto = $texto;
+
+        return $this;
+    }
+
+    public function getObservacao(): string
+    {
+        return $this->observacao;
+    }
+
+    public function setObservacao(string $observacao): self
+    {
+        $this->observacao = $observacao;
+
+        return $this;
+    }
+
+    public function getDataEntrada(): DateTime
+    {
+        return $this->dataEntrada;
+    }
+
+    public function setDataEntrada(DateTime $dataEntrada): self
+    {
+        $this->dataEntrada = $dataEntrada;
+
+        return $this;
+    }
+
+    public function getSigilo(): ?string
+    {
+        return $this->sigilo;
+    }
+
+    public function setSigilo(?string $sigilo): self
+    {
+        $this->sigilo = $sigilo;
+
+        return $this;
+    }
+
+    public function getRascunho(): ?bool
+    {
+        return $this->rascunho;
+    }
+
+    public function setRascunho(?bool $rascunho): self
+    {
+        $this->rascunho = $rascunho;
+
+        return $this;
+    }
+
+    public function getPrazoTransmissao(): ?\DateTimeInterface
+    {
+        return $this->prazoTransmissao;
+    }
+
+    public function setPrazoTransmissao(?\DateTimeInterface $prazoTransmissao): self
+    {
+        $this->prazoTransmissao = $prazoTransmissao;
+
+        return $this;
+    }
+
+    public function getDataAutorizacao(): ?\DateTimeInterface
+    {
+        return $this->dataAutorizacao;
+    }
+
+    public function setDataAutorizacao(?\DateTimeInterface $dataAutorizacao): self
+    {
+        $this->dataAutorizacao = $dataAutorizacao;
+
+        return $this;
+    }
+
+    public function getExigeResposta(): ?bool
+    {
+        return $this->exigeResposta;
+    }
+
+    public function setExigeResposta(bool $exigeResposta): self
+    {
+        $this->exigeResposta = $exigeResposta;
+
+        return $this;
+    }
+
+    public function getPrazoResposta(): ?\DateTimeInterface
+    {
+        return $this->prazoResposta;
+    }
+    
+    public function setPrazoResposta(?\DateTimeInterface $prazoResposta): self
+    {
+        $this->prazoResposta = $prazoResposta;
 
         return $this;
     }
