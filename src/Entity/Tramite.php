@@ -6,6 +6,7 @@ namespace SuppMB\MensagemBackend\Entity;
 
 use DateTime;
 use DMS\Filter\Rules as Filter;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
@@ -34,13 +35,19 @@ class Tramite implements EntityInterface
     use Id;
     use Uuid;
 
-    // #[ORM\OneToOne(targetEntity: 'Mensagem', inversedBy: 'tramite')]
-    // #[ORM\JoinColumn(name: 'mensagem_id', referencedColumnName: 'id', nullable: false)]
-    // protected ?Mensagem $mensagem = null;
+    #[ORM\OneToOne(targetEntity: Mensagem::class, inversedBy: 'tramite')]
+    #[ORM\JoinColumn(name: 'mensagem_id', referencedColumnName: 'id', nullable: false)]
+    protected ?Mensagem $mensagem = null;
 
-    #[ORM\ManyToOne(targetEntity: 'SuppCore\AdministrativoBackend\Entity\Usuario')]
-    #[ORM\JoinColumn(name: 'usuario_atual_id', referencedColumnName: 'id', nullable: true)]
-    protected ?Usuario $usuario_atual = null;
+    #[ORM\ManyToOne(targetEntity: Usuario::class)]
+    #[ORM\JoinColumn(name: 'usuario_atual_id', referencedColumnName: 'id', nullable: false)]
+    protected ?Usuario $usuarioAtual = null;
+
+    #[ORM\OneToMany(targetEntity: TramitePassado::class, mappedBy: 'tramite', orphanRemoval: true, cascade: ['persist', 'remove'])]
+    private Collection $tramitesPassados;
+
+    #[ORM\OneToMany(targetEntity: TramiteFuturo::class, mappedBy: 'tramite', orphanRemoval: true, cascade: ['persist', 'remove'])]
+    private Collection $tramitesFuturos;
 
     /**
      * Constructor.
@@ -52,26 +59,50 @@ class Tramite implements EntityInterface
         $this->setUuid();
     }
 
-    // public function getMensagem(): ?Mensagem
-    // {
-    //     return $this->mensagem;
-    // }
+    public function getMensagem(): ?Mensagem
+    {
+        return $this->mensagem;
+    }
 
-    // public function setMensagem(?Mensagem $mensagem): self
-    // {
-    //     $this->mensagem = $mensagem;
+    public function setMensagem(?Mensagem $mensagem): self
+    {
+        $this->mensagem = $mensagem;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getUsuarioAtual(): ?Usuario
     {
-        return $this->usuario_atual;
+        return $this->usuarioAtual;
     }
 
-    public function setUsuarioAtual(?Usuario $usuario_atual): self
+    public function setUsuarioAtual(?Usuario $usuarioAtual): self
     {
-        $this->usuario_atual = $usuario_atual;
+        $this->usuarioAtual = $usuarioAtual;
+
+        return $this;
+    }
+
+    public function getTramitesPassados(): Collection
+    {
+        return $this->tramitesPassados;
+    }
+
+    // public function setTramitesPassados(Collection $tramitesPassados): self
+    // {
+    //     $this->tramitesPassados = $tramitesPassados;
+
+    //     return $this;
+    // }
+        
+    public function getTramitesFuturos(): Collection
+    {
+        return $this->tramitesFuturos;
+    }
+
+    public function setTramitesFuturos(Collection $tramitesFuturos): self
+    {
+        $this->tramitesFuturos = $tramitesFuturos;
 
         return $this;
     }

@@ -176,8 +176,6 @@ class Mensagem extends RestDto
             'required' => false,
         ]
     )]
-    #[Assert\NotBlank(message: 'O campo não pode estar em branco!')]
-    #[Assert\NotNull(message: 'O campo não pode ser nulo!')]
     #[OA\Property(ref: new Model(type: TramiteDTO::class))]
     #[DTOMapper\Property(dtoClass: 'SuppMB\MensagemBackend\Api\V1\DTO\Tramite')]
     protected ?EntityInterface $tramite = null;

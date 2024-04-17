@@ -48,3 +48,51 @@ Registrar o bundle adicionando em config/bundles.php
     ]
 
 Por fim, realizar o rebuild do docker
+
+
+-------------------------------------
+
+# POST
+localhost:8000/v1/mensagem
+<br>
+{
+    "assunto": "Teste de assunto",
+    "texto": "Texto de teste para mensagens",
+    "observacao": "observação",
+    "sigilo": "reservado",
+    "prazoTransmissao": "2024-04-20T00:00:00",
+    "exigeResposta": true,
+    "prazoResposta": "2024-04-25T15:00:00",
+    "unidadeOrigem": 1
+}
+
+# PUT
+localhost:8000/v1/mensagem
+<br>
+{
+    "assunto": "Teste de assunto",
+    "texto": "Texto de teste para mensagens",
+    "observacao": "observação",
+    "sigilo": "reservado",
+    "prazoTransmissao": "2024-04-20T00:00:00",
+    "exigeResposta": true,
+    "prazoResposta": "2024-04-25T15:00:00",
+    "unidadeOrigem": 1
+}
+
+# POST
+localhost:8000/v1/tramite
+<br>
+{
+    "mensagem": 3,
+    "usuarioAtual": 6
+}
+
+# POST
+localhost:8000/v1/tramite-futuro
+<br>
+{
+    "ordem": 2,
+    "tramite": 4,
+    "usuario": 7
+}

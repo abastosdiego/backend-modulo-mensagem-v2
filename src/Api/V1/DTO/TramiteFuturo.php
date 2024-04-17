@@ -19,18 +19,18 @@ use SuppCore\AdministrativoBackend\Form\Attributes as Form;
 use SuppCore\AdministrativoBackend\Mapper\Attributes as DTOMapper;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use SuppMB\MensagemBackend\Api\V1\DTO\Mensagem as MensagemDTO;
+use SuppMB\MensagemBackend\Api\V1\DTO\Tramite as TramiteDTO;
 
 /**
- * Class Tramite.
+ * Class TramiteFuturo.
  */
 #[DTOMapper\JsonLD(
-    jsonLDId: '/v1/tramite/{id}',
-    jsonLDType: 'Tramite',
-    jsonLDContext: '/api/doc/#model-tramite'
+    jsonLDId: '/v1/tramite-futuro/{id}',
+    jsonLDType: 'TramiteFuturo',
+    jsonLDContext: '/api/doc/#model-tramitefuturo'
 )]
 #[Form\Form]
-class Tramite extends RestDto
+class TramiteFuturo extends RestDto
 {
     use IdUuid;
     use Timeblameable;
@@ -38,17 +38,27 @@ class Tramite extends RestDto
     use Softdeleteable;
 
     #[Form\Field(
+        'Symfony\Component\Form\Extension\Core\Type\IntegerType',
+        options: [
+            'required' => true,
+        ]
+    )]
+    #[OA\Property(type: 'integer')]
+    #[DTOMapper\Property]
+    protected ?int $ordem = null;
+
+    #[Form\Field(
         'Symfony\Bridge\Doctrine\Form\Type\EntityType',
         options: [
-            'class' => 'SuppMB\MensagemBackend\Entity\Mensagem',
+            'class' => 'SuppMB\MensagemBackend\Entity\Tramite',
             'required' => true,
         ]
     )]
     #[Assert\NotBlank(message: 'O campo não pode estar em branco!')]
     #[Assert\NotNull(message: 'O campo não pode ser nulo!')]
-    #[OA\Property(ref: new Model(type: MensagemDTO::class))]
-    #[DTOMapper\Property(dtoClass: 'SuppMB\MensagemBackend\Api\V1\DTO\Mensagem')]
-    protected ?EntityInterface $mensagem = null;
+    #[OA\Property(ref: new Model(type: TramiteDTO::class))]
+    #[DTOMapper\Property(dtoClass: 'SuppMB\MensagemBackend\Api\V1\DTO\Tramite')]
+    protected ?EntityInterface $tramite = null;
     
     #[Form\Field(
         'Symfony\Bridge\Doctrine\Form\Type\EntityType',
@@ -61,33 +71,47 @@ class Tramite extends RestDto
     #[Assert\NotNull(message: 'O campo não pode ser nulo!')]
     #[OA\Property(ref: new Model(type: UsuarioDTO::class))]
     #[DTOMapper\Property(dtoClass: 'SuppCore\AdministrativoBackend\Api\V1\DTO\Usuario')]
-    protected ?EntityInterface $usuarioAtual = null;
+    protected ?EntityInterface $usuario = null;
     
-    
-    public function getMensagem(): ?EntityInterface
+
+    public function getOrdem(): ?int
     {
-        return $this->mensagem;
+        return $this->ordem;
     }
 
-    public function setMensagem(?EntityInterface $mensagem): self
+    public function setOrdem(?int $ordem): self
     {
-        $this->setVisited('mensagem');
+        $this->setVisited('ordem');
 
-        $this->mensagem = $mensagem;
+        $this->ordem = $ordem;
 
         return $this;
     }
 
-    public function getUsuarioAtual(): ?EntityInterface
+    public function getTramite(): ?EntityInterface
     {
-        return $this->usuarioAtual;
+        return $this->tramite;
     }
 
-    public function setUsuarioAtual(?EntityInterface $usuarioAtual): self
+    public function setTramite(?EntityInterface $tramite): self
     {
-        $this->setVisited('usuarioAtual');
+        $this->setVisited('tramite');
 
-        $this->usuarioAtual = $usuarioAtual;
+        $this->tramite = $tramite;
+
+        return $this;
+    }
+
+    public function getUsuario(): ?EntityInterface
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(?EntityInterface $usuario): self
+    {
+        $this->setVisited('usuario');
+
+        $this->usuario = $usuario;
 
         return $this;
     }
