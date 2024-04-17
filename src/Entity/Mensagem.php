@@ -91,6 +91,9 @@ class Mensagem implements EntityInterface
     #[ORM\JoinColumn(name: 'unidade_origem_id', referencedColumnName: 'id', nullable: false)]
     protected Setor $unidadeOrigem;
 
+    // #[ORM\OneToOne(targetEntity: 'Tramite', mappedBy: 'mensagem', cascade: ['persist'])]
+    // protected ?Tramite $tramite = null;
+
     /**
      * Constructor.
      *
@@ -247,4 +250,16 @@ class Mensagem implements EntityInterface
 
         return $this;
     }
+
+    // public function getTramite(): ?Tramite
+    // {
+    //     return $this->tramite;
+    // }
+
+    // public function setTramite(?Tramite $tramite): self
+    // {
+    //     $this->tramite = $tramite;
+
+    //     return $this;
+    // }
 }

@@ -21,6 +21,8 @@ use SuppCore\AdministrativoBackend\Mapper\Attributes as DTOMapper;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
+use SuppMB\MensagemBackend\Api\V1\DTO\Tramite as TramiteDTO;
+
 /**
  * Class Mensagem.
  */
@@ -166,7 +168,19 @@ class Mensagem extends RestDto
     #[OA\Property(ref: new Model(type: SetorDTO::class))]
     #[DTOMapper\Property(dtoClass: 'SuppCore\AdministrativoBackend\Api\V1\DTO\Setor')]
     protected ?EntityInterface $unidadeOrigem = null;
-    
+
+    #[Form\Field(
+        'Symfony\Bridge\Doctrine\Form\Type\EntityType',
+        options: [
+            'class' => 'SuppMB\MensagemBackend\Entity\Tramite',
+            'required' => false,
+        ]
+    )]
+    #[Assert\NotBlank(message: 'O campo não pode estar em branco!')]
+    #[Assert\NotNull(message: 'O campo não pode ser nulo!')]
+    #[OA\Property(ref: new Model(type: TramiteDTO::class))]
+    #[DTOMapper\Property(dtoClass: 'SuppMB\MensagemBackend\Api\V1\DTO\Tramite')]
+    protected ?EntityInterface $tramite = null;
 
     public function getDataHora(): ?string
     {
@@ -340,6 +354,20 @@ class Mensagem extends RestDto
         $this->setVisited('unidadeOrigem');
 
         $this->unidadeOrigem = $unidadeOrigem;
+
+        return $this;
+    }
+
+    public function getTramite(): ?EntityInterface
+    {
+        return $this->tramite;
+    }
+
+    public function setTramite(?EntityInterface $tramite): self
+    {
+        $this->setVisited('tramite');
+
+        $this->tramite = $tramite;
 
         return $this;
     }
