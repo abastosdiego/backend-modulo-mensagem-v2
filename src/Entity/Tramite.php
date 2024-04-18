@@ -94,7 +94,7 @@ class Tramite implements EntityInterface
 
     //     return $this;
     // }
-        
+
     public function getTramitesFuturos(): Collection
     {
         return $this->tramitesFuturos;
@@ -105,5 +105,9 @@ class Tramite implements EntityInterface
         $this->tramitesFuturos = $tramitesFuturos;
 
         return $this;
+    }
+
+    public function limparTramitesFuturos() {
+        $this->tramitesFuturos = [];
     }
 }

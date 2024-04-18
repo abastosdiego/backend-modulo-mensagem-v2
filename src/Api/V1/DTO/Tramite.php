@@ -6,6 +6,7 @@ namespace SuppMB\MensagemBackend\Api\V1\DTO;
 
 use DateTime;
 use DMS\Filter\Rules as Filter;
+use Doctrine\Common\Collections\Collection;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Attributes as OA;
 use SuppCore\AdministrativoBackend\Api\V1\DTO\Usuario as UsuarioDTO;
@@ -20,6 +21,9 @@ use SuppCore\AdministrativoBackend\Mapper\Attributes as DTOMapper;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use SuppMB\MensagemBackend\Api\V1\DTO\Mensagem as MensagemDTO;
+
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 /**
  * Class Tramite.
@@ -50,20 +54,29 @@ class Tramite extends RestDto
     #[DTOMapper\Property(dtoClass: 'SuppMB\MensagemBackend\Api\V1\DTO\Mensagem')]
     protected ?EntityInterface $mensagem = null;
     
-    #[Form\Field(
-        'Symfony\Bridge\Doctrine\Form\Type\EntityType',
-        options: [
-            'class' => 'SuppCore\AdministrativoBackend\Entity\Usuario',
-            'required' => true,
-        ]
-    )]
-    #[Assert\NotBlank(message: 'O campo não pode estar em branco!')]
-    #[Assert\NotNull(message: 'O campo não pode ser nulo!')]
     #[OA\Property(ref: new Model(type: UsuarioDTO::class))]
     #[DTOMapper\Property(dtoClass: 'SuppCore\AdministrativoBackend\Api\V1\DTO\Usuario')]
     protected ?EntityInterface $usuarioAtual = null;
     
-    
+    #[Form\Field(
+        'Symfony\Component\Form\Extension\Core\Type\TextType',
+        options: [
+            'required' => true,
+        ]
+    )]
+    protected ?string $idUsuariosTramitesFuturos;
+
+
+    #[Form\Field(
+        'Symfony\Component\Form\Extension\Core\Type\CollectionType',
+        options: [
+            'entry_type' => IntegerType::class,
+            'required' => false,
+        ]
+    )]
+    protected array $ids = [];
+
+
     public function getMensagem(): ?EntityInterface
     {
         return $this->mensagem;
@@ -88,6 +101,30 @@ class Tramite extends RestDto
         $this->setVisited('usuarioAtual');
 
         $this->usuarioAtual = $usuarioAtual;
+
+        return $this;
+    }
+
+    public function getIdUsuariosTramitesFuturos(): ?string
+    {
+        return $this->idUsuariosTramitesFuturos;
+    }
+
+    public function setIdUsuariosTramitesFuturos(?string $idUsuariosTramitesFuturos): self
+    {
+        $this->idUsuariosTramitesFuturos = $idUsuariosTramitesFuturos;
+
+        return $this;
+    }
+
+    public function getIds(): array
+    {
+        return $this->ids;
+    }
+
+    public function setIds(array $ids): self
+    {
+        $this->ids = $ids;
 
         return $this;
     }
