@@ -107,7 +107,21 @@ class Tramite implements EntityInterface
         return $this;
     }
 
+    public function removeTramiteFuturo(TramiteFuturo $tramiteFuturo): self
+    {
+        $this->tramitesFuturos->removeElement($tramiteFuturo);
+
+        return $this;
+    }
+
     public function limparTramitesFuturos() {
         $this->tramitesFuturos = [];
+    }
+
+    public function getProximoTramiteFuturo(): TramiteFuturo
+    {
+        if (count($this->getTramitesFuturos()) == 0) { new \DomainException("Trâmite não definido!");}
+
+        return (object) $this->tramitesFuturos[0];
     }
 }
