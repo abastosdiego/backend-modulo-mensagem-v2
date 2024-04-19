@@ -45,15 +45,11 @@ class Trigger0002 implements TriggerInterface
      */
     public function execute(?RestDtoInterface $restDto, EntityInterface $entity, string $transactionId): void
     {
-        dd($restDto);
-
-        $idsUsuarios = explode(",", $restDto->getIdUsuariosTramitesFuturos());
-
         //Não sei porque, mas a criação dos Tramites Futuros precisa ser do último para o primeiro para ficar na ordem certa.
 
-        $ordem = count($idsUsuarios);
+        $ordem = count($restDto->getIdUsuariosTramitesFuturos());
 
-        foreach(array_reverse($idsUsuarios) as $idUsuario) {
+        foreach(array_reverse($restDto->getIdUsuariosTramitesFuturos()) as $idUsuario) {
 
             $usuario = $this->usuarioRepository->find(intval($idUsuario));
             

@@ -59,22 +59,14 @@ class Tramite extends RestDto
     protected ?EntityInterface $usuarioAtual = null;
     
     #[Form\Field(
-        'Symfony\Component\Form\Extension\Core\Type\TextType',
-        options: [
-            'required' => true,
-        ]
-    )]
-    protected ?string $idUsuariosTramitesFuturos;
-
-
-    #[Form\Field(
         'Symfony\Component\Form\Extension\Core\Type\CollectionType',
         options: [
             'entry_type' => IntegerType::class,
             'required' => false,
+            'allow_add' => true
         ]
     )]
-    protected array $ids = [];
+    protected array $idUsuariosTramitesFuturos = [];
 
 
     public function getMensagem(): ?EntityInterface
@@ -104,27 +96,15 @@ class Tramite extends RestDto
 
         return $this;
     }
-
-    public function getIdUsuariosTramitesFuturos(): ?string
+    
+    public function getIdUsuariosTramitesFuturos(): array
     {
         return $this->idUsuariosTramitesFuturos;
     }
 
-    public function setIdUsuariosTramitesFuturos(?string $idUsuariosTramitesFuturos): self
+    public function setIdUsuariosTramitesFuturos(array $idUsuariosTramitesFuturos): self
     {
         $this->idUsuariosTramitesFuturos = $idUsuariosTramitesFuturos;
-
-        return $this;
-    }
-
-    public function getIds(): array
-    {
-        return $this->ids;
-    }
-
-    public function setIds(array $ids): self
-    {
-        $this->ids = $ids;
 
         return $this;
     }
